@@ -7,6 +7,7 @@ public class Connect4{
         System.out.println("What size would you like the board? Please enter as (height as int) by (width as int)");
         String boardDimension = input1.nextLine();
         String[] dimensions = boardDimension.split(" by ");
+        //board has to be a minimum size of 4 by 4
         Board b = new Board(Integer.parseInt(dimensions[0]), Integer.parseInt(dimensions[1]));
         System.out.println(b);
         b.lineSeperator();
@@ -16,11 +17,19 @@ public class Connect4{
     }
 
     public static void play(Player p1, Player p2, Board b){
-        boolean over = true;
-        do{
+        while(true){
             p1.playTurn(b);
+            if(b.checkWin() != 0){
+                System.out.println("Player 1 + has won!");
+                break;
+            }
             p2.playTurn(b);
-        }while(over);
+            if(b.checkWin() != 0){
+                System.out.println("Player 2 + has won!");
+                break;
+            }
+
+        }
     }
 }
 
@@ -86,6 +95,27 @@ class Board{
 
     public int getNumberofCols(){
         return grid[0].length;
+    }
+
+    public int checkWin(){
+        int value = grid[0][0];
+        for(int r = 0; r < height; r++){
+            for(int c = 0; c < width; c++){
+                value = grid[r][c];
+                if(value != 0){
+                try{
+                    //checking straight
+                    if(grid[r][c] == grid[r][c+1] && grid[r][c+1] == grid[r][c+2] && grid[r][c+2] == grid[r][c+3]){
+                        System.out.println("Straight");
+                        return value;
+                    }
+                }catch(ArrayIndexOutOfBoundsException e){
+
+                }
+                }
+            }
+        }
+        return value;
     }
 
 }
