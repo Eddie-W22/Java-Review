@@ -10,15 +10,17 @@ public class Connect4{
         Board b = new Board(Integer.parseInt(dimensions[0]), Integer.parseInt(dimensions[1]));
         System.out.println(b);
         b.lineSeperator();
-        System.out.println(b.getNumberofCols());
-        System.out.println(b.getNumberofRows());
         Player p1 = new Player(1);
         Player p2 = new Player(2);
-        p1.playTurn(b);
-        p2.playTurn(b);
-        b.showBoard();
-        
+        Connect4.play(p1, p2, b);
+    }
 
+    public static void play(Player p1, Player p2, Board b){
+        boolean over = true;
+        do{
+            p1.playTurn(b);
+            p2.playTurn(b);
+        }while(over);
     }
 }
 
@@ -100,7 +102,8 @@ class Player{
 
     public void playTurn(Board b){
         boolean done = false;
-        
+        boolean fDone = true;
+        do{
             do{
                 b.showBoard();
                 System.out.println("It is Player " + playerN + "'s turn.");
@@ -113,8 +116,10 @@ class Player{
                     done = true;
                 }
             }while(!done);
-            //need to check against the actual number of col that exist
-            if(placePiece(b, pm)){System.out.println("Col is full. Try another.")};
+            if(!placePiece(b, pm)){
+                fDone = !fDone;
+            }
+        }while(fDone);
 
         
         
@@ -132,7 +137,6 @@ class Player{
         if(notDone){
             System.out.println("This colomn is already full. Place somewhere else.");
             return notDone;
-            // then play the round over again
         }
         return notDone;
     }
