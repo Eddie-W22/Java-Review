@@ -158,8 +158,8 @@ class Board{
     public boolean isFull(){
         boolean full = false;
         int count = 0;
-        for(int r = height-1; r > 0; r--){
-            for(int c = width-1; c> 0;c--){
+        for(int r = height-1; r >= 0; r--){
+            for(int c = width-1; c >= 0;c--){
                 if(grid[r][c] == 0){
                     count++;
                 }
@@ -211,7 +211,7 @@ class Player{
 
     public boolean placePiece(Board b, int c){
         Boolean notDone = true;
-        for(int r = b.getNumberofRows()-1; r > 0;r--){
+        for(int r = b.getNumberofRows()-1; r >= 0;r--){
             if(b.getPlace(r, c) == 0 && notDone){
                 b.setPlace(r, c, playerN);
                 notDone = !notDone;
@@ -219,6 +219,7 @@ class Player{
         }
         if(notDone){
             System.out.println("This colomn is already full. Place somewhere else.");
+            b.lineSeperator();
             return notDone;
         }
         return notDone;
