@@ -6,10 +6,16 @@ public class Connect4{
         Scanner input1 = new Scanner(System.in);
         System.out.println("What size would you like the board? Please enter as (height as int) by (width as int)");
         String boardDimension = input1.nextLine();
-        String[] dimensions = boardDimension.split(" by ");
+        boardDimension.toLowerCase();
+        //checks user input syntax(check against having letters beyond the ' by ', not having the ' by ' word for word)
 
-        //checks if board is minimum size
+        String[] dimensions = boardDimension.split(" by ");
+        
+
+        //checks if board is minimum size and user syntax
         while(true){
+
+            }
             if(Integer.parseInt(dimensions[0]) < 4|| Integer.parseInt(dimensions[1]) < 4){
                 System.out.println("Board must be a minimum of 4 by 4. Please try again.");
                 boardDimension = input1.nextLine();
