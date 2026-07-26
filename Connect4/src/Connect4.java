@@ -104,9 +104,24 @@ class Board{
                 value = grid[r][c];
                 if(value != 0){
                 try{
-                    //checking straight
+                    //checking horizontal
                     if(grid[r][c] == grid[r][c+1] && grid[r][c+1] == grid[r][c+2] && grid[r][c+2] == grid[r][c+3]){
-                        System.out.println("Straight");
+                        System.out.println("Horizontal");
+                        return value;
+                    }
+                    //checking vertical
+                    if(grid[r][c] == grid[r+1][c] && grid[r+1][c] == grid[r+2][c] && grid[r+2][c] == grid[r+3][c]){
+                        System.out.println("Vertical");
+                        return value;
+                    }
+                    //checking downwards right diagonal
+                    if(grid[r][c] == grid[r+1][c+1] && grid[r+1][c+1] == grid[r+2][c+2] && grid[r+2][c+2] == grid[r+3][c+3]){
+                        System.out.println("Diagonal");
+                        return value;
+                    }
+                    //checking downwards left diagonal
+                    if(grid[r][c] == grid[r+1][c-1] && grid[r+1][c-1] == grid[r+2][c-2] && grid[r+2][c-2] == grid[r+3][c-3]){
+                        System.out.println("Diagonal(2)");
                         return value;
                     }
                 }catch(ArrayIndexOutOfBoundsException e){
