@@ -6,16 +6,30 @@ public class Connect4{
         Scanner input1 = new Scanner(System.in);
         System.out.println("What size would you like the board? Please enter as (height as int) by (width as int)");
         String boardDimension = input1.nextLine();
-        boardDimension.toLowerCase();
-        //checks user input syntax(check against having letters beyond the ' by ', not having the ' by ' word for word)
+        boardDimension = boardDimension.toLowerCase();
+        String[] dimensions;
+        //checks that " by " is written correctly
+        while (true) {
+            if(boardDimension.contains(" by ")){
+                dimensions = boardDimension.split(" by ");
+                break;
+            }else{
+                System.out.println("Ensure that \" by \" has been written out correctly. Try Again.");
+                boardDimension = input1.nextLine();
+        }
+        }
 
-        String[] dimensions = boardDimension.split(" by ");
-        
-
-        //checks if board is minimum size and user syntax
+        //checks if board is minimum size and other user syntax
         while(true){
 
+            try{
+                int n = Integer.parseInt(dimensions[0]);
+            }catch (NumberFormatException e){
+                System.out.println("Input must be: number by number. No spaces beforehand or extra letters");
+                boardDimension = input1.nextLine();
+                dimensions = boardDimension.split(" by ");
             }
+            
             if(Integer.parseInt(dimensions[0]) < 4|| Integer.parseInt(dimensions[1]) < 4){
                 System.out.println("Board must be a minimum of 4 by 4. Please try again.");
                 boardDimension = input1.nextLine();
@@ -24,6 +38,7 @@ public class Connect4{
                 break;
             }
         }
+    
 
         Board b = new Board(Integer.parseInt(dimensions[0]), Integer.parseInt(dimensions[1]));
         b.lineSeperator();
@@ -31,7 +46,7 @@ public class Connect4{
         Player p2 = new Player(2);
         Connect4.play(p1, p2, b);
     }
-
+    
     public static void play(Player p1, Player p2, Board b){
         while(true){
             if(b.isFull()){
