@@ -7,9 +7,19 @@ public class Connect4{
         System.out.println("What size would you like the board? Please enter as (height as int) by (width as int)");
         String boardDimension = input1.nextLine();
         String[] dimensions = boardDimension.split(" by ");
-        //board has to be a minimum size of 4 by 4
+
+        //checks if board is minimum size
+        while(true){
+            if(Integer.parseInt(dimensions[0]) < 4|| Integer.parseInt(dimensions[1]) < 4){
+                System.out.println("Board must be a minimum of 4 by 4. Please try again.");
+                boardDimension = input1.nextLine();
+                dimensions = boardDimension.split(" by ");
+            }else{
+                break;
+            }
+        }
+
         Board b = new Board(Integer.parseInt(dimensions[0]), Integer.parseInt(dimensions[1]));
-        System.out.println(b);
         b.lineSeperator();
         Player p1 = new Player(1);
         Player p2 = new Player(2);
@@ -18,9 +28,17 @@ public class Connect4{
 
     public static void play(Player p1, Player p2, Board b){
         while(true){
+            if(b.isFull()){
+                System.out.println("Board is full. Its a tie!");
+                break;
+            }
             p1.playTurn(b);
             if(b.checkWin() != 0){
                 System.out.println("Player 1 + has won!");
+                break;
+            }
+            if(b.isFull()){
+                System.out.println("Board is full. Its a tie!");
                 break;
             }
             p2.playTurn(b);
@@ -30,6 +48,8 @@ public class Connect4{
             }
 
         }
+        b.lineSeperator();
+        b.showBoard();
     }
 }
 
@@ -98,30 +118,33 @@ class Board{
     }
 
     public int checkWin(){
-        int value = grid[0][0];
+        int value = 0;
         for(int r = 0; r < height; r++){
             for(int c = 0; c < width; c++){
-                value = grid[r][c];
                 if(value != 0){
                 try{
                     //checking horizontal
                     if(grid[r][c] == grid[r][c+1] && grid[r][c+1] == grid[r][c+2] && grid[r][c+2] == grid[r][c+3]){
                         System.out.println("Horizontal");
+                        value = grid[r][c];
                         return value;
                     }
-                    //checking vertical
+                    // //checking vertical
                     if(grid[r][c] == grid[r+1][c] && grid[r+1][c] == grid[r+2][c] && grid[r+2][c] == grid[r+3][c]){
                         System.out.println("Vertical");
+                        value = grid[r][c];
                         return value;
                     }
-                    //checking downwards right diagonal
+                    // //checking first diagonal(downwards to the right)
                     if(grid[r][c] == grid[r+1][c+1] && grid[r+1][c+1] == grid[r+2][c+2] && grid[r+2][c+2] == grid[r+3][c+3]){
                         System.out.println("Diagonal");
+                        value = grid[r][c];
                         return value;
                     }
-                    //checking downwards left diagonal
+                    // //checking other diagonal(downwards to the left)
                     if(grid[r][c] == grid[r+1][c-1] && grid[r+1][c-1] == grid[r+2][c-2] && grid[r+2][c-2] == grid[r+3][c-3]){
                         System.out.println("Diagonal(2)");
+                        value = grid[r][c];
                         return value;
                     }
                 }catch(ArrayIndexOutOfBoundsException e){
@@ -131,6 +154,21 @@ class Board{
             }
         }
         return value;
+    }
+    public boolean isFull(){
+        boolean full = false;
+        int count = 0;
+        for(int r = height-1; r > 0; r--){
+            for(int c = width-1; c> 0;c--){
+                if(grid[r][c] == 0){
+                    count++;
+                }
+            }
+        }
+        if(count == 0){
+            full = true;
+        }
+        return full;
     }
 
 }
