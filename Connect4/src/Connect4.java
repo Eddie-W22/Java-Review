@@ -24,6 +24,7 @@ public class Connect4{
 
             try{
                 int n = Integer.parseInt(dimensions[0]);
+                int n2 = Integer.parseInt(dimensions[1]);
             }catch (NumberFormatException e){
                 System.out.println("Input must be: number by number. No spaces beforehand or extra letters");
                 boardDimension = input1.nextLine();
@@ -46,7 +47,7 @@ public class Connect4{
         Player p2 = new Player(2);
         Connect4.play(p1, p2, b);
     }
-    
+
     public static void play(Player p1, Player p2, Board b){
         while(true){
             if(b.isFull()){
