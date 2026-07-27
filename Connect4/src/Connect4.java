@@ -7,39 +7,35 @@ public class Connect4{
         System.out.println("What size would you like the board? Please enter as (height as int) by (width as int)");
         String boardDimension = input1.nextLine();
         boardDimension = boardDimension.toLowerCase();
-        String[] dimensions;
-        //checks that " by " is written correctly
-        while (true) {
+        String[] dimensions = new String[2];
+        //checks if board is minimum size and other user syntax
+        while(true){
             if(boardDimension.contains(" by ")){
                 dimensions = boardDimension.split(" by ");
-                break;
             }else{
                 System.out.println("Ensure that \" by \" has been written out correctly. Try Again.");
                 boardDimension = input1.nextLine();
-        }
-        }
-
-        //checks if board is minimum size and other user syntax
-        while(true){
-
+                boardDimension = boardDimension.toLowerCase();
+                continue;
+            }
             try{
-                int n = Integer.parseInt(dimensions[0]);
-                int n2 = Integer.parseInt(dimensions[1]);
+                Integer.parseInt(dimensions[0]);
+                Integer.parseInt(dimensions[1]);
             }catch (NumberFormatException e){
                 System.out.println("Input must be: number by number. No spaces beforehand or extra letters");
                 boardDimension = input1.nextLine();
-                dimensions = boardDimension.split(" by ");
+                boardDimension = boardDimension.toLowerCase();
+                continue;                    
             }
-            
             if(Integer.parseInt(dimensions[0]) < 4|| Integer.parseInt(dimensions[1]) < 4){
                 System.out.println("Board must be a minimum of 4 by 4. Please try again.");
                 boardDimension = input1.nextLine();
-                dimensions = boardDimension.split(" by ");
+                boardDimension = boardDimension.toLowerCase();  
+                continue;                
             }else{
                 break;
             }
         }
-    
 
         Board b = new Board(Integer.parseInt(dimensions[0]), Integer.parseInt(dimensions[1]));
         b.lineSeperator();
