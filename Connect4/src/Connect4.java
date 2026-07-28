@@ -72,6 +72,8 @@ public class Connect4{
     }
 }
 
+
+
 class Board{
     private int[][] grid;
     private int width;
@@ -84,16 +86,16 @@ class Board{
 
     for(int row = 0; row < height;row++){
         for(int col = 0; col < width;col++ ){
-            grid[row][col] = 0;
+            grid[row][col] = Cell.EMPTY.value();
         }
     }
     }
 
-    public int getPlace(int r, int c){
+    public int getCell(int r, int c){
         return this.grid[r][c];
     }
 
-    public void setPlace(int r, int c, int p){
+    public void setCell(int r, int c, int p){
         this.grid[r][c] = p;
     }
 
@@ -101,7 +103,7 @@ class Board{
         String s = "";
         for(int r = 0; r < height; r++){
             for(int c = 0; c < width; c++){
-                s += this.getPlace(r,c) + " ";
+                s += this.getCell(r,c) + " ";
             }
             if(r != height - 1) s += "\n";
         }
@@ -109,14 +111,7 @@ class Board{
     }
 
     public void showBoard(){
-        String s = "";
-        for(int r = 0; r < height; r++){
-            for(int c = 0; c < width; c++){
-                s += this.getPlace(r,c) + " ";
-            }
-            if(r != height - 1) s += "\n";
-        }
-        System.out.println(s);
+        System.out.println(this.toString());
         this.lineSeperator();
     }
     //makes a line do seperate sections based on width of the board
@@ -137,41 +132,41 @@ class Board{
     }
     //iterates through each square checking a horizontal, vertical, or digonal win
     public int checkWin(){
-        int value = 0;
+        int cell = Cell.EMPTY.value();
         for(int r = 0; r < height; r++){
             for(int c = 0; c < width; c++){
-                value = grid[r][c];
-                if(value != 0){
+                cell = grid[r][c];
+                if(cell != Cell.EMPTY.value()){
                 try{
                     //checking horizontal
                     if(grid[r][c] == grid[r][c+1] && grid[r][c+1] == grid[r][c+2] && grid[r][c+2] == grid[r][c+3]){
                         System.out.println("Horizontal");
-                        return value;
+                        return cell;
                     }
                     //checking vertical
                     if(grid[r][c] == grid[r+1][c] && grid[r+1][c] == grid[r+2][c] && grid[r+2][c] == grid[r+3][c]){
                         System.out.println("Vertical");
-                        return value;
+                        return cell;
                     }
                     //checking first diagonal(downwards to the right)
                     if(grid[r][c] == grid[r+1][c+1] && grid[r+1][c+1] == grid[r+2][c+2] && grid[r+2][c+2] == grid[r+3][c+3]){
                         System.out.println("Diagonal");
-                        return value;
+                        return cell;
                     }
                     //checking other diagonal(downwards to the left)
                     if(grid[r][c] == grid[r+1][c-1] && grid[r+1][c-1] == grid[r+2][c-2] && grid[r+2][c-2] == grid[r+3][c-3]){
                         System.out.println("Diagonal(2)");
-                        return value;
+                        return cell;
                     }
                 
                 }catch(ArrayIndexOutOfBoundsException e){
 
                 }
                 }
-                value = 0;
+                cell = Cell.EMPTY.value();
             }
         }
-        return value;
+        return cell;
     }
     //checks each empty square, and if there aren't any, the board is then full
     public boolean isFull(){
@@ -180,7 +175,7 @@ class Board{
         //checks board from bottom up to count empty spaces
         for(int r = height-1; r >= 0; r--){
             for(int c = width-1; c >= 0;c--){
-                if(grid[r][c] == 0){
+                if(grid[r][c] == Cell.EMPTY.value()){
                     count++;
                 }
             }
@@ -229,8 +224,8 @@ class Player{
         Boolean piecePlaced = false;
         //if there is space, put piece in the bottom of the col
         for(int r = b.getNumberofRows()-1; r >= 0;r--){
-            if(b.getPlace(r, c) == 0){
-                b.setPlace(r, c, playerN);
+            if(b.getCell(r, c) == Cell.EMPTY.value()){
+                b.setCell(r, c, playerN);
                 piecePlaced = true;
                 break;
             }
