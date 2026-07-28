@@ -139,36 +139,39 @@ class Board{
         int value = 0;
         for(int r = 0; r < height; r++){
             for(int c = 0; c < width; c++){
+                value = grid[r][c];
                 if(value != 0){
                 try{
                     //checking horizontal
                     if(grid[r][c] == grid[r][c+1] && grid[r][c+1] == grid[r][c+2] && grid[r][c+2] == grid[r][c+3]){
                         System.out.println("Horizontal");
-                        value = grid[r][c];
+                        //value = grid[r][c];
                         return value;
                     }
                     // //checking vertical
                     if(grid[r][c] == grid[r+1][c] && grid[r+1][c] == grid[r+2][c] && grid[r+2][c] == grid[r+3][c]){
                         System.out.println("Vertical");
-                        value = grid[r][c];
+                        //value = grid[r][c];
                         return value;
                     }
                     // //checking first diagonal(downwards to the right)
                     if(grid[r][c] == grid[r+1][c+1] && grid[r+1][c+1] == grid[r+2][c+2] && grid[r+2][c+2] == grid[r+3][c+3]){
                         System.out.println("Diagonal");
-                        value = grid[r][c];
+                        //value = grid[r][c];
                         return value;
                     }
                     // //checking other diagonal(downwards to the left)
                     if(grid[r][c] == grid[r+1][c-1] && grid[r+1][c-1] == grid[r+2][c-2] && grid[r+2][c-2] == grid[r+3][c-3]){
                         System.out.println("Diagonal(2)");
-                        value = grid[r][c];
+                        //value = grid[r][c];
                         return value;
                     }
+                
                 }catch(ArrayIndexOutOfBoundsException e){
 
                 }
                 }
+                value = 0;
             }
         }
         return value;
