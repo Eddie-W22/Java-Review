@@ -45,7 +45,7 @@ public class Connect4{
     }
 
     public static void play(Player p1, Player p2, Board b){
-        //first check if board is full, then plays the turn, and lastly checks to see if that was a winning move for each player's turn
+        //TODO first check if board is full, then plays the turn, and lastly checks to see if that was a winning move for each player's turn
         while(true){
             if(b.isFull()){
                 System.out.println("Board is full. Its a tie!");
@@ -114,7 +114,7 @@ class Board{
         System.out.println(this.toString());
         this.lineSeperator();
     }
-    //makes a line do seperate sections based on width of the board
+    //TODO makes a line do seperate sections based on width of the board
     public void lineSeperator(){
         String l = "";
         for(int x = 0; x < this.width; x++){
@@ -148,12 +148,12 @@ class Board{
                         System.out.println("Vertical");
                         return cell;
                     }
-                    //checking first diagonal(downwards to the right)
+                    //TODO checking first diagonal(downwards to the right)
                     if(grid[r][c] == grid[r+1][c+1] && grid[r+1][c+1] == grid[r+2][c+2] && grid[r+2][c+2] == grid[r+3][c+3]){
                         System.out.println("Diagonal");
                         return cell;
                     }
-                    //checking other diagonal(downwards to the left)
+                    //TODO checking other diagonal(downwards to the left)
                     if(grid[r][c] == grid[r+1][c-1] && grid[r+1][c-1] == grid[r+2][c-2] && grid[r+2][c-2] == grid[r+3][c-3]){
                         System.out.println("Diagonal(2)");
                         return cell;
@@ -168,11 +168,11 @@ class Board{
         }
         return cell;
     }
-    //checks each empty square, and if there aren't any, the board is then full
+    //* checks each empty square, and if there aren't any, the board is then full
     public boolean isFull(){
         boolean full = false;
         int count = 0;
-        //checks board from bottom up to count empty spaces
+        //* checks board from bottom up to count empty spaces
         for(int r = height-1; r >= 0; r--){
             for(int c = width-1; c >= 0;c--){
                 if(grid[r][c] == Cell.EMPTY.value()){
@@ -199,9 +199,9 @@ class Player{
     }
 
     public void playTurn(Board b){
-        //outer loop places piece when inner loop finishes
+        //* outer loop places piece when inner loop finishes
         while(true){
-            //inner loop takes user input and checks if it is a real col
+            //* inner loop takes user input and checks if it is a real col
             while(true){
                 b.showBoard();
                 System.out.println("It is Player " + playerN + "'s turn.");
@@ -222,7 +222,7 @@ class Player{
 
     public boolean placePiece(Board b, int c){
         Boolean piecePlaced = false;
-        //if there is space, put piece in the bottom of the col
+        //* if there is space, put piece in the bottom of the col
         for(int r = b.getNumberofRows()-1; r >= 0;r--){
             if(b.getCell(r, c) == Cell.EMPTY.value()){
                 b.setCell(r, c, playerN);
@@ -230,7 +230,7 @@ class Player{
                 break;
             }
         }
-        //if piece not placed, say the col is full
+        //* if piece not placed, say the col is full
         if(!piecePlaced){
             System.out.println("This colomn is already full. Place somewhere else.");
             b.lineSeperator();
