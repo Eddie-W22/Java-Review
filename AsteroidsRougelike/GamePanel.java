@@ -6,11 +6,17 @@ import javax.imageio.ImageIO;         // for actually reading PNG files from dis
 import java.io.File;       // or java.io.IOException, depending on how you load images
 
 public class GamePanel extends JPanel implements KeyListener{
-    int xCord = 300;
-    int yCord = 300;
+    public int xCord = 300;
+    public int yCord = 300;
+    public boolean rightKeyHeld = false;
+    public boolean leftKeyHeld = false;
+    public boolean upKeyHeld = false;
+    public boolean downKeyHeld = false;
+
     @Override
     protected void paintComponent(Graphics g){
         super.paintComponent(g);
+        setFocusable(true);
         g.drawString("Hola Brochacho", 50, 50);
         g.fillOval(xCord, yCord, 10, 10);
     }
@@ -34,22 +40,27 @@ public class GamePanel extends JPanel implements KeyListener{
     @Override
     public void keyPressed(KeyEvent e){
         if(e.getKeyCode() == KeyEvent.VK_RIGHT){
-            System.out.println("Right Pressed");
-            xCord += 5;
+            rightKeyHeld = true;
+            System.out.println("Right Pressed " + rightKeyHeld);
+            
+            //xCord += 5;
             
         }
         if(e.getKeyCode() == KeyEvent.VK_LEFT){
             System.out.println("Left Pressed");
-            xCord -= 5;
+            leftKeyHeld = true;
+            //xCord -= 5;
         }
         if(e.getKeyCode() == KeyEvent.VK_UP){
             System.out.println("Up Pressed");
-            yCord -= 5;
+            upKeyHeld = true;
+            //yCord -= 5;
             
         }
         if(e.getKeyCode() == KeyEvent.VK_DOWN){
             System.out.println("Down Pressed");
-            yCord += 5;
+            downKeyHeld = true;
+            //yCord += 5;
         }
     }
 
