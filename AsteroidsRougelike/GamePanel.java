@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;  // for holding loaded PNGs in memory
 import javax.imageio.ImageIO;         // for actually reading PNG files from disk
 import java.io.File;       // or java.io.IOException, depending on how you load images
 
-public class GamePanel extends JPanel{
+public class GamePanel extends JPanel implements KeyListener{
     int xCord = 300;
     int yCord = 300;
     @Override
@@ -18,5 +18,39 @@ public class GamePanel extends JPanel{
     public void movingOval(int x, int y){
         xCord += x;
         yCord += y;
+    }
+
+        @Override
+    public void keyTyped(KeyEvent e){
+
+        if(e.getKeyCode() == KeyEvent.VK_RIGHT){
+            System.out.println("Right Typed");
+        }
+        if(e.getKeyCode() == KeyEvent.VK_LEFT){
+            System.out.println("Left Typed");
+        }
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e){
+        if(e.getKeyCode() == KeyEvent.VK_RIGHT){
+            System.out.println("Right Pressed");
+            xCord += 5;
+            
+        }
+        if(e.getKeyCode() == KeyEvent.VK_LEFT){
+            System.out.println("Left Pressed");
+            xCord -= 5;
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e){
+        if(e.getKeyCode() == KeyEvent.VK_RIGHT){
+            System.out.println("Right Released");
+        }
+        if(e.getKeyCode() == KeyEvent.VK_LEFT){
+            System.out.println("Left Released");
+        }
     }
 }

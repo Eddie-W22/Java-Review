@@ -8,15 +8,16 @@ import java.io.File;       // or java.io.IOException, depending on how you load 
 public class AsteroidsRoguelike{
     public static void main(String[] args){
         JFrame frame = new JFrame("Frame Test #1");
-        JLabel label = new JLabel("Label Test #1");
+        // JLabel label = new JLabel("Label Test #1");
         frame.setSize(600, 600);
         GamePanel gp = new GamePanel();
-        Ship testDummy = new Ship(300, 300);
+        // Ship testDummy = new Ship(300, 300);
         frame.add(gp);
+        frame.addKeyListener(gp);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
         Timer timer = new Timer(16, e -> {
-            gp.movingOval(5, 0);
+            //gp.movingOval(5, 0);
             gp.repaint();
         });
         timer.start();
