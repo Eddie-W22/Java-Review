@@ -19,10 +19,10 @@ public class AsteroidsRoguelike{
         frame.setVisible(true);
         Timer timer = new Timer(16, e -> {
             if(gp.rightKeyHeld){
-                gp.angle += gp.rotationAngle;
+                gp.angle -= gp.rotationAngle;
             }
             if(gp.leftKeyHeld){
-                gp.angle -= gp.rotationAngle;
+                gp.angle += gp.rotationAngle;
             }
             if(gp.upKeyHeld){
                 gp.thrust += .2;

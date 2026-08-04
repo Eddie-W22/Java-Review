@@ -25,7 +25,7 @@ public class GamePanel extends JPanel implements KeyListener{
         super.paintComponent(g);
         setFocusable(true);
         Graphics2D g2d = (Graphics2D) g;
-        g2d.rotate(angle, xCord, yCord);
+        g2d.rotate(-angle, xCord, yCord);
         g2d.fill(new Ellipse2D.Double(xCord - 7.5, yCord - 5, 15, 10));
         
     }
@@ -75,7 +75,7 @@ public class GamePanel extends JPanel implements KeyListener{
         }
         if(e.getKeyCode() == KeyEvent.VK_LEFT){
             System.out.println("Left Released");
-            leftKeyHeld = true;
+            leftKeyHeld = false;
         }
         if(e.getKeyCode() == KeyEvent.VK_UP){
             upKeyHeld = false;
