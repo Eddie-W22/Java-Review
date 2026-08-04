@@ -9,7 +9,7 @@ public class AsteroidsRoguelike{
     public static void main(String[] args){
         JFrame frame = new JFrame("Frame Test #1");
         // JLabel label = new JLabel("Label Test #1");
-        frame.setSize(600, 600);
+        frame.setSize(1200, 600);
         GamePanel gp = new GamePanel();
         gp.requestFocusInWindow();
         // Ship testDummy = new Ship(300, 300);
@@ -18,10 +18,29 @@ public class AsteroidsRoguelike{
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
         Timer timer = new Timer(16, e -> {
-            if(gp.rightKeyHeld = true){gp.xCord += 5;}
-            if(gp.leftKeyHeld = true){gp.xCord -= 5;}
-            if(gp.upKeyHeld = true){gp.yCord -= 5;}
-            if(gp.downKeyHeld = true){gp.yCord += 5;}
+            if(gp.rightKeyHeld){
+                gp.angle += gp.rotationAngle;
+            }
+            if(gp.leftKeyHeld){
+                gp.angle -= gp.rotationAngle;
+            }
+            if(gp.upKeyHeld){
+                gp.thrust += .2;
+                System.out.println("Speeding up");
+            }
+            if(!gp.upKeyHeld){
+                if(gp.thrust <= 0){
+                    gp.thrust = 0;
+                }else{
+                gp.thrust -= .05;
+                System.out.println("Slowing down");
+                }
+            }
+            gp.yCord += gp.gravity;
+            gp.xV = Math.cos(gp.angle) * gp.thrust;
+            gp.yV = Math.sin(gp.angle) * gp.thrust;
+            gp.xCord += gp.xV;
+            gp.yCord -= gp.yV;
             gp.repaint();
         });
         timer.start();
