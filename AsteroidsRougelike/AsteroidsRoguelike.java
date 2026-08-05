@@ -19,16 +19,17 @@ public class AsteroidsRoguelike{
         frame.setVisible(true);
         Timer timer = new Timer(16, e -> {
             if(gp.rightKeyHeld){
-                gp.angle -= gp.rotationAngle;
+                gp.shipAngle -= gp.rotationAngle;
             }
             if(gp.leftKeyHeld){
-                gp.angle += gp.rotationAngle;
+                gp.shipAngle += gp.rotationAngle;
             }
             if(gp.upKeyHeld){
-                gp.thrust += .2;
+                gp.thrust = .5;
                 System.out.println("Speeding up");
             }
             if(!gp.upKeyHeld){
+                gp.thrust = 0;
                 if(gp.thrust <= 0){
                     gp.thrust = 0;
                 }else{
@@ -36,9 +37,9 @@ public class AsteroidsRoguelike{
                 System.out.println("Slowing down");
                 }
             }
-            gp.yCord += gp.gravity;
-            gp.xV = Math.cos(gp.angle) * gp.thrust;
-            gp.yV = Math.sin(gp.angle) * gp.thrust;
+            gp.yV -= gp.gravity;
+            gp.xV += Math.cos(gp.shipAngle) * gp.thrust;
+            gp.yV += Math.sin(gp.shipAngle) * gp.thrust;
             gp.xCord += gp.xV;
             gp.yCord -= gp.yV;
             gp.repaint();

@@ -13,19 +13,21 @@ public class GamePanel extends JPanel implements KeyListener{
     public boolean leftKeyHeld = false;
     public boolean upKeyHeld = false;
     public boolean downKeyHeld = false;
-    public double angle = 0;
+    public double shipAngle = 0;
+    //public double momentumAngle = 0;
     public double xV = 0;
     public double yV = 0;
     public double thrust = 0;
-    public double gravity = .2;
+    public double gravity = .05;
     public double rotationAngle = Math.PI/24;
+    //public double momentum = 0;
 
     @Override
     protected void paintComponent(Graphics g){
         super.paintComponent(g);
         setFocusable(true);
         Graphics2D g2d = (Graphics2D) g;
-        g2d.rotate(-angle, xCord, yCord);
+        g2d.rotate(-shipAngle, xCord, yCord);
         g2d.fill(new Ellipse2D.Double(xCord - 7.5, yCord - 5, 15, 10));
         
     }
