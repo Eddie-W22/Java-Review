@@ -1,3 +1,4 @@
+package src;
 import javax.swing.*;      // JFrame, JPanel, Timer, JButton, etc.
 import java.awt.*;         // Graphics, Graphics2D, Color, Font, etc.
 import java.awt.event.*;   // KeyListener, ActionListener, MouseListener, etc.
@@ -7,37 +8,26 @@ import javax.imageio.ImageIO;         // for actually reading PNG files from dis
 import java.io.File;       // or java.io.IOException, depending on how you load images
 
 public class GamePanel extends JPanel implements KeyListener{
-    public double xCord = 50;
-    public double yCord = 150;
     public boolean rightKeyHeld = false;
     public boolean leftKeyHeld = false;
     public boolean upKeyHeld = false;
     public boolean downKeyHeld = false;
-    public double shipAngle = 0;
-    //public double momentumAngle = 0;
-    public double xV = 0;
-    public double yV = 0;
-    public double thrust = 0;
-    public double gravity = .05;
-    public double rotationAngle = Math.PI/24;
-    //public double momentum = 0;
+    private Ship s1;
+
+    public GamePanel(Ship s){
+        s1 = s;
+    }
 
     @Override
     protected void paintComponent(Graphics g){
         super.paintComponent(g);
         setFocusable(true);
-        Graphics2D g2d = (Graphics2D) g;
-        g2d.rotate(-shipAngle, xCord, yCord);
-        g2d.fill(new Ellipse2D.Double(xCord - 7.5, yCord - 5, 15, 10));
-        
+        addKeyListener(s1);
+        s1.draw(g);
+        //TODO: Particle effects
     }
 
-    public void movingOval(int x, int y){
-        xCord += x;
-        yCord += y;
-    }
-
-        @Override
+    @Override
     public void keyTyped(KeyEvent e){
 
         if(e.getKeyCode() == KeyEvent.VK_RIGHT){
