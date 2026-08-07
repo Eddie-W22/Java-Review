@@ -15,6 +15,7 @@ public class AsteroidsRoguelike{
         GamePanel gp = new GamePanel(player);
         gp.requestFocusInWindow();
         frame.add(gp);
+        //
         frame.addKeyListener(gp);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
