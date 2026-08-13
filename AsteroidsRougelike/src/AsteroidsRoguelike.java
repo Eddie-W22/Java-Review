@@ -21,8 +21,8 @@ public class AsteroidsRoguelike{
         frame.setVisible(true);
         Timer timer = new Timer(16, e -> {
             gp.requestFocusInWindow();
-            p1.movement();
             e1.movement();
+            p1.movement();
             gp.repaint();
         });
         timer.start();

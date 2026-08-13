@@ -31,8 +31,10 @@ public class Ship{
 
     public void draw(Graphics g){
         Graphics2D g2d = (Graphics2D) g;
+        AffineTransform originalTransform = g2d.getTransform();
         g2d.rotate(-shipAngle, xCord, yCord);
         g2d.fill(new Ellipse2D.Double(xCord - 7.5, yCord - 5, 15, 10));
+        g2d.setTransform(originalTransform);
     }
 }
 
@@ -46,11 +48,14 @@ class PlayerShip extends Ship implements KeyListener{
         super(x,y);
     }
 
+    @Override
     public void draw(Graphics g){
         Graphics2D g2d = (Graphics2D) g;
         g2d.setColor(Color.DARK_GRAY);
+        AffineTransform originalTransform = g2d.getTransform();
         g2d.rotate(-shipAngle, xCord, yCord);
         g2d.fill(new Ellipse2D.Double(xCord - 7.5, yCord - 5, 15, 10));
+        g2d.setTransform(originalTransform);
     }
 
     public void movement(){
@@ -173,8 +178,7 @@ class EnemyShip extends Ship{
         yV -= gravity;
         xCord += xV;
         yCord -= yV;
-        //System.out.println(distToTarget + " A " + shipAngle);
-        System.out.println(xCord + " B " + yCord);
+        System.out.println(distToTarget);
         
         // if(yCord >= 500 || yCord <= 100){
         //     yV = -yV;
@@ -184,10 +188,13 @@ class EnemyShip extends Ship{
         // }
     }
 
+    @Override
     public void draw(Graphics g){
         Graphics2D g2d = (Graphics2D) g;
         g2d.setColor(Color.red);
+        AffineTransform originalTransform = g2d.getTransform();
         g2d.rotate(-shipAngle, xCord, yCord);
-        g2d.fill(new Ellipse2D.Double(xCord - 7.5, yCord - 5, 7.5, 5));
+        g2d.fill(new Ellipse2D.Double(xCord - 3.75, yCord - 2.5, 7.5, 5));
+        g2d.setTransform(originalTransform);
     }
 }
