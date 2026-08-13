@@ -11,17 +11,18 @@ public class AsteroidsRoguelike{
     public static void main(String[] args){
         JFrame frame = new JFrame("Frame Test #1");
         frame.setSize(1200, 600);
-        Ship player = new Ship(120, 300);
-        GamePanel gp = new GamePanel(player);
+        PlayerShip p1 = new PlayerShip(120, 300);
+        EnemyShip e1 = new EnemyShip(1080, 300, p1);
+        GamePanel gp = new GamePanel(p1, e1);
         gp.requestFocusInWindow();
         frame.add(gp);
-        //
         frame.addKeyListener(gp);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
         Timer timer = new Timer(16, e -> {
             gp.requestFocusInWindow();
-            player.movement();
+            p1.movement();
+            e1.movement();
             gp.repaint();
         });
         timer.start();

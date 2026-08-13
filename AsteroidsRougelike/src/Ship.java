@@ -8,7 +8,7 @@ import java.io.File;
 import java.awt.geom.*;
 
 
-public class Ship implements KeyListener{
+public class Ship{
     public double xCord = 0;
     public double yCord = 0;
     public boolean rightKeyHeld = false;
@@ -33,6 +33,20 @@ public class Ship implements KeyListener{
         g2d.rotate(-shipAngle, xCord, yCord);
         g2d.fill(new Ellipse2D.Double(xCord - 7.5, yCord - 5, 15, 10));
     }
+}
+
+class PlayerShip extends Ship implements KeyListener{
+
+    public PlayerShip(int x, int y){
+        super(x,y);
+    }
+
+    public void draw(Graphics g){
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.setColor(Color.DARK_GRAY);
+        g2d.rotate(-shipAngle, xCord, yCord);
+        g2d.fill(new Ellipse2D.Double(xCord - 7.5, yCord - 5, 15, 10));
+    }
 
     public void movement(){
         if(rightKeyHeld){
@@ -41,13 +55,11 @@ public class Ship implements KeyListener{
         if(leftKeyHeld){
             shipAngle += rotationAngle;
         }
-       if(upKeyHeld){
+        if(upKeyHeld){
             thrust = .5;
-            System.out.println("Speeding up");
         }else{
             thrust = 0;
         }
-        yV -= gravity;
         if(xV > 0){
             xV -= drag;
         }else if(xV < 0){
@@ -55,6 +67,7 @@ public class Ship implements KeyListener{
         }
         xV += Math.cos(shipAngle) * thrust;
         yV += Math.sin(shipAngle) * thrust;
+        yV -= gravity;
         drag = xV/75;
         xCord += xV;
         yCord -= yV;
@@ -66,14 +79,12 @@ public class Ship implements KeyListener{
         }
     }
 
+
     @Override
     public void keyTyped(KeyEvent e){
-
         if(e.getKeyCode() == KeyEvent.VK_RIGHT){
-            System.out.println("Right Typed");
         }
         if(e.getKeyCode() == KeyEvent.VK_LEFT){
-            System.out.println("Left Typed");
         }
     }
 
@@ -81,18 +92,14 @@ public class Ship implements KeyListener{
     public void keyPressed(KeyEvent e){
         if(e.getKeyCode() == KeyEvent.VK_RIGHT){
             rightKeyHeld = true;
-            System.out.println("Right Pressed " + rightKeyHeld);
         }
         if(e.getKeyCode() == KeyEvent.VK_LEFT){
-            System.out.println("Left Pressed");
             leftKeyHeld = true;
         }
         if(e.getKeyCode() == KeyEvent.VK_UP){
-            System.out.println("Up Pressed");
             upKeyHeld = true;
         }
         if(e.getKeyCode() == KeyEvent.VK_DOWN){
-            System.out.println("Down Pressed");
             downKeyHeld = true;
         }
     }
@@ -100,12 +107,10 @@ public class Ship implements KeyListener{
     @Override
     public void keyReleased(KeyEvent e){
         if(e.getKeyCode() == KeyEvent.VK_RIGHT){
-            System.out.println("Right Released");
             rightKeyHeld = false;
 
         }
         if(e.getKeyCode() == KeyEvent.VK_LEFT){
-            System.out.println("Left Released");
             leftKeyHeld = false;
         }
         if(e.getKeyCode() == KeyEvent.VK_UP){
@@ -115,6 +120,58 @@ public class Ship implements KeyListener{
             downKeyHeld = false;
         }
     }
+}
 
+class EnemyShip extends Ship{
+    Ship target;
+    double distToTarget;
+    double xDist;
+    double yDist;
+    double angleToTarget;
+    public EnemyShip(int x, int y, Ship p){
+        super(x,y);
+        target = p;
+    }
 
+    public void movement(){
+        yDist = target.yCord-yCord;
+        xDist = target.xCord - xCord;
+        angleToTarget = Math.atan2(-yDist, xDist);
+        shipAngle = angleToTarget;
+        distToTarget = Math.sqrt(Math.pow(yDist, 2) + Math.pow(xDist, 2));
+        if(distToTarget >= 200){
+            thrust = .2;
+        }else{
+            thrust = .5;
+            if(xV > 0)xV = 1;
+            if(xV < 0)xV = -1;
+        }
+        if(xV > 0){
+            xV -= drag;
+        }else if(xV < 0){
+            xV += drag;
+        }
+        xV += Math.cos(shipAngle) * thrust;
+        yV += Math.sin(shipAngle) * thrust;
+        drag = xV/75;
+        yV -= gravity;
+        xCord += xV;
+        yCord -= yV;
+        System.out.println(distToTarget + " " + shipAngle);
+        System.out.println(xCord + " " + yCord);
+        
+        // if(yCord >= 500 || yCord <= 100){
+        //     yV = -yV;
+        // }
+        // if(xCord >= 1100 || xCord <= 100){
+        //     xV = -xV;
+        // }
+    }
+
+    public void draw(Graphics g){
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.setColor(Color.red);
+        g2d.rotate(-shipAngle, xCord, yCord);
+        g2d.fill(new Ellipse2D.Double(xCord - 7.5, yCord - 5, 7.5, 5));
+    }
 }

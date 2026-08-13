@@ -12,9 +12,15 @@ public class GamePanel extends JPanel implements KeyListener{
     public boolean leftKeyHeld = false;
     public boolean upKeyHeld = false;
     public boolean downKeyHeld = false;
-    private Ship s1;
+    private PlayerShip s1;
+    private EnemyShip e1;
 
-    public GamePanel(Ship s){
+    public GamePanel(PlayerShip s, EnemyShip e){
+        s1 = s;
+        e1 = e;
+    }
+
+    public GamePanel(PlayerShip s){
         s1 = s;
     }
 
@@ -24,6 +30,7 @@ public class GamePanel extends JPanel implements KeyListener{
         setFocusable(true);
         addKeyListener(s1);
         s1.draw(g);
+        e1.draw(g);
         //TODO: Particle effects
     }
 
