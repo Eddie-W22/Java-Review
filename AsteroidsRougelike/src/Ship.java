@@ -134,6 +134,7 @@ class EnemyShip extends Ship{
     }
 
     public void movement(){
+        //! FIX the movement bug
         yDist = target.yCord-yCord;
         xDist = target.xCord - xCord;
         angleToTarget = Math.atan2(-yDist, xDist);
