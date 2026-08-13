@@ -19,8 +19,9 @@ public class Ship{
     public double xV = 0;
     public double yV = 0;
     public double thrust = 0;
-    public double gravity = .05;
-    public double drag = 0;
+    public double gravity = 0;
+    public double xDrag = 0;
+    public double yDrag = 0;
     public double rotationAngle = Math.PI/24;
 
     public Ship(int x, int y){
@@ -36,6 +37,10 @@ public class Ship{
 }
 
 class PlayerShip extends Ship implements KeyListener{
+    public boolean rightKeyHeld = false;
+    public boolean leftKeyHeld = false;
+    public boolean upKeyHeld = false;
+    public boolean downKeyHeld = false;
 
     public PlayerShip(int x, int y){
         super(x,y);
@@ -61,14 +66,23 @@ class PlayerShip extends Ship implements KeyListener{
             thrust = 0;
         }
         if(xV > 0){
-            xV -= drag;
+            xV -= xDrag;
         }else if(xV < 0){
-            xV += drag;
+            xV += xDrag;
+        }
+        if(gravity == 0){
+            if(yV > 0){
+                yV += yDrag;
+            }else if(yV < 0){
+                yV -= yDrag;
+            }
+
         }
         xV += Math.cos(shipAngle) * thrust;
         yV += Math.sin(shipAngle) * thrust;
         yV -= gravity;
-        drag = xV/75;
+        xDrag = xV/75;
+        yDrag = yV/75;
         xCord += xV;
         yCord -= yV;
         if(yCord >= 500 || yCord <= 100){
@@ -135,7 +149,7 @@ class EnemyShip extends Ship{
 
     public void movement(){
         //! FIX the movement bug
-        yDist = target.yCord-yCord;
+        yDist = target.yCord- yCord;
         xDist = target.xCord - xCord;
         angleToTarget = Math.atan2(-yDist, xDist);
         shipAngle = angleToTarget;
@@ -148,18 +162,19 @@ class EnemyShip extends Ship{
             if(xV < 0)xV = -1;
         }
         if(xV > 0){
-            xV -= drag;
+            xV -= xDrag;
         }else if(xV < 0){
-            xV += drag;
+            xV += xDrag;
         }
         xV += Math.cos(shipAngle) * thrust;
         yV += Math.sin(shipAngle) * thrust;
-        drag = xV/75;
+        xDrag = xV/75;
+        yDrag = yV/75;
         yV -= gravity;
         xCord += xV;
         yCord -= yV;
-        System.out.println(distToTarget + " " + shipAngle);
-        System.out.println(xCord + " " + yCord);
+        //System.out.println(distToTarget + " A " + shipAngle);
+        System.out.println(xCord + " B " + yCord);
         
         // if(yCord >= 500 || yCord <= 100){
         //     yV = -yV;
