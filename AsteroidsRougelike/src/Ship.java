@@ -59,6 +59,12 @@ class PlayerShip extends Ship implements KeyListener{
     }
 
     public void movement(){
+        if(yCord >= 500 || yCord <= 100){
+            yV = -yV;
+        }
+        if(xCord >= 1100 || xCord <= 100){
+            xV = -xV;
+        }
         if(rightKeyHeld){
             shipAngle -= rotationAngle;
         }
@@ -70,32 +76,20 @@ class PlayerShip extends Ship implements KeyListener{
         }else{
             thrust = 0;
         }
-        if(xV > 0){
+        xDrag = xV/50;
+        yDrag = yV/50;
+        if(xV != 0){
             xV -= xDrag;
-        }else if(xV < 0){
-            xV += xDrag;
         }
-        if(gravity == 0){
-            if(yV > 0){
-                yV += yDrag;
-            }else if(yV < 0){
-                yV -= yDrag;
-            }
-
+        if(gravity == 0 && yV != 0){
+            yV -= yDrag;
         }
         xV += Math.cos(shipAngle) * thrust;
         yV += Math.sin(shipAngle) * thrust;
         yV -= gravity;
-        xDrag = xV/75;
-        yDrag = yV/75;
         xCord += xV;
         yCord -= yV;
-        if(yCord >= 500 || yCord <= 100){
-            yV = -yV;
-        }
-        if(xCord >= 1100 || xCord <= 100){
-            xV = -xV;
-        }
+        System.out.println(yV + " " + xV);
     }
 
 
@@ -153,7 +147,6 @@ class EnemyShip extends Ship{
     }
 
     public void movement(){
-        //! FIX the movement bug
         yDist = target.yCord- yCord;
         xDist = target.xCord - xCord;
         angleToTarget = Math.atan2(-yDist, xDist);
@@ -166,10 +159,11 @@ class EnemyShip extends Ship{
             if(xV > 0)xV = 1;
             if(xV < 0)xV = -1;
         }
-        if(xV > 0){
+        if(xV != 0){
             xV -= xDrag;
-        }else if(xV < 0){
-            xV += xDrag;
+        }
+        if(gravity == 0 && yV != 0){
+            yV -= yDrag;
         }
         xV += Math.cos(shipAngle) * thrust;
         yV += Math.sin(shipAngle) * thrust;
@@ -178,7 +172,6 @@ class EnemyShip extends Ship{
         yV -= gravity;
         xCord += xV;
         yCord -= yV;
-        System.out.println(distToTarget);
         
         // if(yCord >= 500 || yCord <= 100){
         //     yV = -yV;
