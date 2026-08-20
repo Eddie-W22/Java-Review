@@ -4,7 +4,8 @@ import java.awt.*;         // Graphics, Graphics2D, Color, Font, etc.
 import java.awt.event.*;   // KeyListener, ActionListener, MouseListener, etc.
 import java.awt.image.BufferedImage;  // for holding loaded PNGs in memory
 import javax.imageio.ImageIO;         // for actually reading PNG files from disk
-import java.io.File;  
+import java.io.File;
+import java.util.ArrayList;
 import java.awt.geom.*;
 
 
@@ -23,6 +24,7 @@ public class Ship{
     public double xDrag = 0;
     public double yDrag = 0;
     public double rotationAngle = Math.PI/24;
+    public ArrayList<Projectile> projectiles = new ArrayList<>();
 
     public Ship(int x, int y){
         xCord = x;
@@ -43,6 +45,7 @@ class PlayerShip extends Ship implements KeyListener{
     public boolean leftKeyHeld = false;
     public boolean upKeyHeld = false;
     public boolean downKeyHeld = false;
+    public boolean spaceKeyHeld = false;
 
     public PlayerShip(int x, int y){
         super(x,y);
@@ -56,6 +59,10 @@ class PlayerShip extends Ship implements KeyListener{
         g2d.rotate(-shipAngle, xCord, yCord);
         g2d.fill(new Ellipse2D.Double(xCord - 7.5, yCord - 5, 15, 10));
         g2d.setTransform(originalTransform);
+        for(int i = 0; i < projectiles.size(); i++){
+            Projectile p = projectiles.get(i);
+            p.draw(g);
+        }
     }
 
     public void movement(){
@@ -89,16 +96,19 @@ class PlayerShip extends Ship implements KeyListener{
         yV -= gravity;
         xCord += xV;
         yCord -= yV;
-        System.out.println(yV + " " + xV);
+        for(int i = 0; i < projectiles.size(); i++){
+            Projectile p = projectiles.get(i);
+            p.movement();
+        }
+    }
+
+    public void shoot(){
+        projectiles.add(new Projectile(xCord, yCord, shipAngle));
     }
 
 
     @Override
     public void keyTyped(KeyEvent e){
-        if(e.getKeyCode() == KeyEvent.VK_RIGHT){
-        }
-        if(e.getKeyCode() == KeyEvent.VK_LEFT){
-        }
     }
 
     @Override
@@ -115,13 +125,15 @@ class PlayerShip extends Ship implements KeyListener{
         if(e.getKeyCode() == KeyEvent.VK_DOWN){
             downKeyHeld = true;
         }
+        if(e.getKeyCode() == KeyEvent.VK_SPACE){
+            spaceKeyHeld = true;
+        }
     }
 
     @Override
     public void keyReleased(KeyEvent e){
         if(e.getKeyCode() == KeyEvent.VK_RIGHT){
             rightKeyHeld = false;
-
         }
         if(e.getKeyCode() == KeyEvent.VK_LEFT){
             leftKeyHeld = false;
@@ -131,6 +143,10 @@ class PlayerShip extends Ship implements KeyListener{
         }
         if(e.getKeyCode() == KeyEvent.VK_DOWN){
             downKeyHeld = false;
+        }
+        if(e.getKeyCode() == KeyEvent.VK_SPACE){
+            spaceKeyHeld = false;
+            shoot();
         }
     }
 }

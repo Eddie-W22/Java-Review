@@ -6,6 +6,7 @@ import java.awt.event.*;   // KeyListener, ActionListener, MouseListener, etc.
 import java.awt.image.BufferedImage;  // for holding loaded PNGs in memory
 import javax.imageio.ImageIO;         // for actually reading PNG files from disk
 import java.io.File;       // or java.io.IOException, depending on how you load images
+import java.util.ArrayList;
 
 public class AsteroidsRoguelike{
     public static void main(String[] args){
