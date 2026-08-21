@@ -27,6 +27,5 @@ public class GamePanel extends JPanel{
         addKeyListener(s1);
         s1.draw(g);
         e1.draw(g);
-        //TODO: Particle effects
     }
 }

@@ -14,6 +14,8 @@ public class Projectile {
     private double yV;
     private double angle;
     private double speed = 5;
+    private boolean isHit = false;
+
     public Projectile(double x, double y, double a){
         xCord = x;
         yCord = y;
@@ -26,15 +28,29 @@ public class Projectile {
         Graphics2D g2d = (Graphics2D) g;
         AffineTransform originalTransform = g2d.getTransform();
         g2d.setColor(Color.BLUE);
-        g2d.setTransform(originalTransform);
         g2d.rotate(-angle, xCord, yCord);
         g2d.fill(new Ellipse2D.Double(xCord - 2.5, yCord - 2.5, 5, 5));
-        
+        g2d.setTransform(originalTransform);
     }
 
-    public void movement(){
+    public void action(){
+        this.movement();
+        this.collisionCheck();
+    }
+
+    private void movement(){
         xCord += xV;
         yCord += yV;
+    }
+
+    private void collisionCheck(){
+        if(xCord > 1100 || yCord > 500 || xCord < 100 || yCord < 100){
+            isHit = true;
+        }
+    }
+
+    public boolean getIsHit(){
+        return isHit;
     }
 
 

@@ -98,7 +98,11 @@ class PlayerShip extends Ship implements KeyListener{
         yCord -= yV;
         for(int i = 0; i < projectiles.size(); i++){
             Projectile p = projectiles.get(i);
-            p.movement();
+            p.action();
+            if(p.getIsHit()){
+                projectiles.remove(i);
+                i--;
+            }
         }
     }
 
