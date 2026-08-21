@@ -23,7 +23,6 @@ public class Ship{
     public double gravity = 0;
     public double xDrag = 0;
     public double yDrag = 0;
-    public double rotationAngle = Math.PI/24;
     public ArrayList<Projectile> projectiles = new ArrayList<>();
 
     public Ship(int x, int y){
@@ -41,11 +40,13 @@ public class Ship{
 }
 
 class PlayerShip extends Ship implements KeyListener{
-    public boolean rightKeyHeld = false;
-    public boolean leftKeyHeld = false;
-    public boolean upKeyHeld = false;
-    public boolean downKeyHeld = false;
-    public boolean spaceKeyHeld = false;
+    //TODO: Make movement smoother
+    private boolean rightKeyHeld = false;
+    private boolean leftKeyHeld = false;
+    private boolean upKeyHeld = false;
+    private boolean downKeyHeld = false;
+    private boolean spaceKeyHeld = false;
+    public double rotationAngle = Math.PI/36;
 
     public PlayerShip(int x, int y){
         super(x,y);
@@ -79,12 +80,12 @@ class PlayerShip extends Ship implements KeyListener{
             shipAngle += rotationAngle;
         }
         if(upKeyHeld){
-            thrust = .5;
+            thrust = .35;
         }else{
             thrust = 0;
         }
-        xDrag = xV/50;
-        yDrag = yV/50;
+        xDrag = xV/65;
+        yDrag = yV/65;
         if(xV != 0){
             xV -= xDrag;
         }
@@ -207,7 +208,7 @@ class EnemyShip extends Ship{
         g2d.setColor(Color.red);
         AffineTransform originalTransform = g2d.getTransform();
         g2d.rotate(-shipAngle, xCord, yCord);
-        g2d.fill(new Ellipse2D.Double(xCord - 3.75, yCord - 2.5, 7.5, 5));
+        g2d.fill(new Ellipse2D.Double(xCord - 7.5, yCord - 5, 15, 10));
         g2d.setTransform(originalTransform);
     }
 }
