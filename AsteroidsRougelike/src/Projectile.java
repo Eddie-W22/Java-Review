@@ -20,8 +20,8 @@ public class Projectile {
         xCord = x;
         yCord = y;
         angle = a;
-        xV = Math.cos(angle) * speed;
-        yV = Math.sin(angle) * speed;
+        xV = Math.cos(-angle) * speed;
+        yV = Math.sin(-angle) * speed;
     }
 
     public void draw(Graphics g){
